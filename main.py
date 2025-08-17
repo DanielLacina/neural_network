@@ -103,11 +103,15 @@ target_matrix = np.zeros((60000, 10))
 target_matrix[np.arange(60000), train_labels] = 1
 
 neural_network = NeuralNetwork(layers=[Layer(input_size=784, output_size=100, activation="relu"), Layer(input_size=100, output_size=10, activation="softmax")], learning_rate=.01)
-neural_network.train(target=target_matrix, epoches=1, X=X,batch_size=64)
+neural_network.train(target=target_matrix, epoches=10, X=X,batch_size=64)
 X = test_images.reshape((10000, input_size))/255
 target_matrix = np.zeros((10000, 10))
 target_matrix[np.arange(10000), test_labels] = 1
 outputs = neural_network.run(X)
+predictions = np.argmax(outputs, axis=1)
+actual = np.argmax(target_matrix, axis=1)
+accuracy = np.mean(predictions == actual)
+print(accuracy)
 
 
 
